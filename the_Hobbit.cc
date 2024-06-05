@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <fstream>
 using namespace std;
 
 ///function prototypes
@@ -24,7 +25,7 @@ class Hero
 };
 class Adventure
 {
-     string title;
+    string title;
     string description;
     int exp_reward;
     int damage;
@@ -35,6 +36,37 @@ class Adventure
 
 int main(int argc, char const *argv[]) {
 
+///Reading in Quest Values
+    ifstream in;
+    in.open("quests.txt");
+
+    if (in.fail())
+    {
+        cout << "File Failed to Open" << endl;
+        exit(0);
+    }
+
+    string temp;
+    char ch;
+    ch = in.get();
+    while(!in.eof())
+    {
+        if (ch == '|')
+        {
+            cout << temp << endl;
+            temp = "";
+        }
+        else
+        {
+            temp += ch;
+        }
+
+        ch = in.get();
+    
+    }
+
+
+    in.close();
    /*add code*/
    return 0;
 }// main

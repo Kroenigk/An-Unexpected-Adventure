@@ -1,1 +1,26 @@
-Unexpected Dinner Party | 13 Dwarves have suddenly enter your house! | 10 | 0 | Adventurer's Pack
+Unexpected Dinner Party |13 Dwarves have suddenly enter your house! |10|0|Adventurer's Pack
+Leaving The Shire |The Journey lies ahead, gather materials that you might need for your journey!| 
+Stopping in Bree | A village of man, Prepare and gather what you need|
+Mountain Trolls |Some of the Ponies have gone missing! What happened to them? Find them!|
+Warg Attack | Something howls in the distance... but its not a wolf|
+Rivendell |The last Homely Home west of the sea, rest, find out information, and restock for the journey|
+Misty Mountains | 
+Thunder Battle |
+Goblin Town | 
+Riddles in the Dark |
+Out of the Frying Pan into the Fire |
+Great Eagles |
+Beron's Garden |
+Traveling through Mirkwood |
+Caught in a Web |
+Sneaking in the Shadows |
+Barrel Riders |
+Bargeman |
+Laketown |
+Entering the Mountain |
+The Chiefest of Calamities |
+Taking Back the Mountain |
+Gold Sickness |
+Impending War |
+The Battle of the Five Armies |
+Ravenhill |
