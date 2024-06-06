@@ -20,14 +20,22 @@ vector<Adventure> loadQuests();
 
 int main(int argc, char const *argv[])
  {
+    Hero character;
+    string answer;
 
     vector <Adventure> allQuests = loadQuests();
 
-    for(int i = 0; i < allQuests.size(); ++i)
+    ///The Quest Begins
+    cout << "Would you like to Customize your hero?" << endl;
+    cout << "Please Select one: Yes or No: ";
+    cin >> answer;
+    if (answer == "yes" || answer == "Yes")
     {
-        cout << allQuests.at(i).get_title() << endl;
-        cout << allQuests.at(i).get_description() << endl;
-
+       character.customize_hero();
+    }
+    else
+    {
+        cout << character.get_race() << endl;
     }
 
    return 0;

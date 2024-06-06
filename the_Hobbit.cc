@@ -10,95 +10,13 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <cctype>
 #include <fstream>
+#include "the_Hobbit.h"
+
 using namespace std;
 
-///function prototypes
-class Hero
-{
-    string race;
-    vector <string> skills;
-    int level;
-    int exp;
-    int health;
-    vector <string> inventory;
-};
-class Adventure
-{
-    private:
-    string title;
-    string description;
-    int exp_reward;
-    int p_damage;
 
-    public:
-    Adventure(string data);
-    void set_title(string new_title);
-    string get_title();
-    void set_description(string new_description);
-    string get_description();
-    void set_exp_reward(int new_exp_reward);
-    int get_exp_reward();
-    void set_p_damage(int new_p_damage);
-    int get_p_damage();
-};
-
-///Function declarations
- vector<Adventure> loadQuests();
-
-int main(int argc, char const *argv[])
- {
-
-    vector <Adventure> allQuests = loadQuests();
-
-    for(int i = 0; i < allQuests.size(); ++i)
-    {
-        cout << allQuests.at(i).get_title() << endl;
-        cout << allQuests.at(i).get_p_damage() << endl;
-
-    }
-
-
-
-   return 0;
- }
-
- vector<Adventure> loadQuests()
- {
-    vector<Adventure> allQuests;
-    string data;
-    ifstream in;
-    in.open("quests.txt");
-
-    ///checks for failure
-    if (in.fail())
-    {
-        cout << "File Failed to Open" << endl;
-        exit(0);
-    }
-    ///just getting the first line
-    getline(in, data);
-    ///deals with empty lines
-    while(data.empty())
-    {
-        getline(in, data);
-    }
-
-    while(!in.eof())
-    {
-        Adventure a(data);
-        allQuests.push_back(a);
-        getline(in, data);
-     }
-     ///makes sure the last quest is included
-     if(in.eof() && !data.empty())
-     {
-        Adventure a(data);
-        allQuests.push_back(a);
-     }
-    in.close();
-    return allQuests;
- }
  Adventure::Adventure(string data)
  {
     string temp;
@@ -178,3 +96,222 @@ int Adventure::get_p_damage()
 {
     return p_damage;
 }
+
+///Hero Class Functions
+Hero::Hero()
+{
+    ///initialises starting values
+    race = "Hobbit";
+    level = 1;
+    exp = 0;
+    health = 100;
+    vector<string> skills = {"Whit and Wisdom"};
+    vector<string> inventory = {"Handkerchief"};
+
+
+
+}
+///setters and getters
+    void Hero::set_race(string new_race)
+    {
+        if(!new_race.empty())
+        {
+            race = new_race;
+        }
+    }
+    string Hero::get_race()
+    {
+        return race;
+    }
+    void Hero::set_skills(vector<string> new_skills)
+    {
+        if(!new_skills.empty())
+        {
+            skills = new_skills;
+        }
+    }
+    vector<string> Hero::get_skills()
+    {
+        return skills;
+    }
+    void Hero::set_level(int new_level)
+    {
+        if(new_level > 0)
+        {
+            level = new_level;
+        }
+    }
+    int Hero::get_level()
+    {
+        return level;
+    }
+    void Hero::set_exp(int new_exp)
+    {
+        if(new_exp >= 0)
+        {
+            exp = new_exp;
+        }
+    }
+    int Hero::get_exp()
+    {
+        return exp;
+    }
+    void Hero::set_health(int new_health)
+    {
+        if(new_health > 0)
+        {
+            health = new_health;
+        }
+    }
+    int Hero::get_health()
+    {
+        return health;
+    }
+    void Hero::set_inventory(vector<string> new_inventory)
+    {
+        if(!new_inventory.empty())
+        {
+            inventory = new_inventory;
+        }
+    }
+    vector<string> Hero::get_inventory()
+    {
+        return inventory;
+    }
+
+    ///Helper Functions
+    void Hero::add_to_inventory(string new_item)
+    {
+        if(!new_item.empty())
+        {
+            inventory.push_back(new_item);
+        }
+    }
+    void Hero::level_Up()
+    {
+        ++level;
+    }
+    void Hero::learn_skill(string new_skill)
+    {
+        if(!new_skill.empty())
+        {
+            skills.push_back(new_skill);
+        }
+    }
+    string make_lower(string word)
+    {
+    string lowerCase = "";
+    char conversion;
+
+    for(int i = 0; i < word.length(); ++i)
+    {
+        ///takes one character at a time and makes it lowercase
+        conversion = tolower(word.at(i));
+        lowerCase = lowerCase + conversion;
+    }
+    return lowerCase;
+}
+
+    ///Customizing Hero
+    void Hero::customize_hero()
+    {
+     ///customization of character
+    string choice;
+    cout << "You have started your journey. Please build your hero..." << endl;
+    cout << setw(40) << setfill('-') << " ";
+    cout << endl;
+
+    race_menu();
+    cout << "What is your race? ";
+    cin >> choice;
+    choice = make_lower(choice);
+    if(choice == "human" || choice == "hobbit" || choice == "dwarf" || choice == "elf")
+    {
+        race = choice;
+    }
+    cout << setw(40) << setfill('-') << " ";
+    cout << endl;
+
+    //skills
+    string skill1;
+    string skill2;
+    cout << "Choose two skills" << endl;
+    cout << setw(40) << setfill('-') << " ";
+    cout << endl;
+    skill_menu();
+    cout << "Select your skill: ";
+    cin >> skill1;
+    skills.push_back(skill1);
+    cout << "Select your other skill: ";
+    cin >> skill2;
+    skills.push_back(skill2);
+    cout << setw(40) << setfill('-') << " ";
+    cout << endl;
+
+    ///items
+    string item;
+    cout << "What item do you carry?" << endl;
+    cout << setw(40) << setfill('-') << " ";
+    cout << endl;
+    item_menu();
+    cout << "Select and item: ";
+    cin >> item;
+    inventory.push_back(item);
+    cout << setw(40) << setfill('-') << " ";
+    cout << endl; 
+
+
+    }
+    ///Menus
+    void Hero::race_menu()
+    {
+        cout << "Human" << endl;
+        cout << "Hobbit" << endl;
+        cout << "Dwarf" << endl;
+        cout << "Elf" << endl;
+    }
+    void Hero::skill_menu()
+    {
+        cout << "Healing" << endl;
+        cout << "Fighting" << endl;
+        cout << "Tracking" << endl;
+        cout << "Scouting" << endl;
+        cout << "Baking and Cooking" << endl;
+        cout << "Sewing" << endl;
+    }
+    void Hero::item_menu()
+    {
+        cout << "Axe" << endl;
+        cout << "Sword" << endl;
+        cout << "Bow and Arrows" << endl;
+        cout << "Daggers" << endl;
+        cout << "Medical Kit" << endl;
+        cout << "Sewing kit" << endl;
+    }
+    void Hero::hero_stats()
+    {
+        cout << "Race: " << race << endl;
+        cout << "Level: " << level << endl;
+        cout << "Exp: " << exp << endl;
+        cout << "Skills: ";
+        for (int i = 0; i < skills.size(); ++i)
+        {
+            cout << skills.at(i);
+            if(!(i = skills.size() - 1))
+            {
+                cout << ", ";
+            }
+        }
+        cout << setfill('-') << setw(20) << endl; 
+        cout << "Inventory: ";
+        for (int i = 0; i < inventory.size(); ++i)
+        {
+            cout << inventory.at(i);
+            if(!(i = inventory.size() - 1))
+            {
+                cout << ", ";
+            }
+        }
+        cout << setfill('-') << setw(20) << endl; 
+
+    }

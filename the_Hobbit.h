@@ -25,6 +25,8 @@ class Hero
     vector<string> inventory;
 
     public:
+    //Constructors
+    Hero();
     ///setters and getters
     void set_race(string new_race);
     string get_race();
@@ -40,8 +42,14 @@ class Hero
     vector<string> get_inventory();
 
     ///Helper Functions
+    void customize_hero();
+    void hero_stats();
+    void race_menu();
+    void skill_menu();
+    void item_menu();
     void add_to_inventory(string new_item);
     void level_Up();
+    void learn_skill(string new_skill);
 
 
 };
@@ -66,3 +74,4 @@ class Adventure
     void set_p_damage(int new_p_damage);
     int get_p_damage();
 };
+string make_lower(string word);
