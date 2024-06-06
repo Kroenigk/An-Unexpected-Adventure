@@ -25,18 +25,43 @@ class Hero
 };
 class Adventure
 {
+    private:
     string title;
     string description;
     int exp_reward;
-    int damage;
-    vector <string> consequences;
+    int p_damage;
 
-
+    public:
+    void set_title(string new_title);
+    string get_title();
+    void set_description(string new_description);
+    string get_description();
+    void set_exp_reward(int new_exp_reward);
+    int get_exp_reward();
+    void set_p_damage(int new_p_damage);
+    int get_p_damage();
 };
 
-int main(int argc, char const *argv[]) {
+///Function declarations
+ vector<Adventure> loadQuests();
 
-///Reading in Quest Values
+int main(int argc, char const *argv[])
+ {
+
+    vector <Adventure> quests = loadQuests();
+   // for(int i = 0; i < quests.size(); ++i)
+    //{
+    //   cout << quests.at(i).title;
+    //    cout << quests.at(i).p_damage;
+   // }
+
+
+   return 0;
+ }
+ vector<Adventure> loadQuests()
+ {
+    vector<Adventure> quests;
+    ///Reading in Quest Values
     ifstream in;
     in.open("quests.txt");
 
@@ -47,26 +72,42 @@ int main(int argc, char const *argv[]) {
     }
 
     string temp;
-    char ch;
-    ch = in.get();
+    string data;
+    vector<string> holder;
+
+    getline(in, data);
+    cout << data << endl;
+    
     while(!in.eof())
     {
-        if (ch == '|')
+        for(int i = 0; i < data.size(); ++i)
         {
-            cout << temp << endl;
+           if (data.at(i) == '|' || i == (data.size()- 1))
+        {
+            ///exception for the end of the string
+            if(i == (data.size() - 1))
+            {
+                temp += data.at(i);
+            }
+
+            holder.push_back(temp);
             temp = "";
         }
-        else
+            else
         {
-            temp += ch;
+            temp += data.at(i);
         }
-
-        ch = in.get();
-    
+        }
+        getline(in, data);
     }
 
-
+    for(int i = 0; i < holder.size(); i += 4)
+    {
+        cout << holder.at(i) << endl;
+        cout << holder.at(i + 1) << endl;
+        cout << holder.at(i + 2) << endl;
+        cout << holder.at(i + 3) << endl;
+    }
     in.close();
-   /*add code*/
-   return 0;
-}// main
+    return quests;
+ }
