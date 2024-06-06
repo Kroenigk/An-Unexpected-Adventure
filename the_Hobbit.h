@@ -43,13 +43,14 @@ class Hero
 
     ///Helper Functions
     void customize_hero();
-    void hero_stats();
+
     void race_menu();
     void skill_menu();
     void item_menu();
     void add_to_inventory(string new_item);
     void level_Up();
     void learn_skill(string new_skill);
+    void hero_stats();
 
 
 };
