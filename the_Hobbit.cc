@@ -32,6 +32,7 @@ class Adventure
     int p_damage;
 
     public:
+    Adventure(string data);
     void set_title(string new_title);
     string get_title();
     void set_description(string new_description);
@@ -48,39 +49,62 @@ class Adventure
 int main(int argc, char const *argv[])
  {
 
-    vector <Adventure> quests = loadQuests();
-   // for(int i = 0; i < quests.size(); ++i)
-    //{
-    //   cout << quests.at(i).title;
-    //    cout << quests.at(i).p_damage;
-   // }
+    vector <Adventure> allQuests = loadQuests();
+
+    for(int i = 0; i < allQuests.size(); ++i)
+    {
+        cout << allQuests.at(i).get_title() << endl;
+        cout << allQuests.at(i).get_p_damage() << endl;
+
+    }
+
 
 
    return 0;
  }
+
  vector<Adventure> loadQuests()
  {
-    vector<Adventure> quests;
-    ///Reading in Quest Values
+    vector<Adventure> allQuests;
+    string data;
     ifstream in;
     in.open("quests.txt");
 
+    ///checks for failure
     if (in.fail())
     {
         cout << "File Failed to Open" << endl;
         exit(0);
     }
-
-    string temp;
-    string data;
-    vector<string> holder;
-
+    ///just getting the first line
     getline(in, data);
-    cout << data << endl;
-    
+    ///deals with empty lines
+    while(data.empty())
+    {
+        getline(in, data);
+    }
+
     while(!in.eof())
     {
-        for(int i = 0; i < data.size(); ++i)
+        Adventure a(data);
+        allQuests.push_back(a);
+        getline(in, data);
+     }
+     ///makes sure the last quest is included
+     if(in.eof() && !data.empty())
+     {
+        Adventure a(data);
+        allQuests.push_back(a);
+     }
+    in.close();
+    return allQuests;
+ }
+ Adventure::Adventure(string data)
+ {
+    string temp;
+    vector<string> holder;
+
+    for(int i = 0; i < data.size(); ++i)
         {
            if (data.at(i) == '|' || i == (data.size()- 1))
         {
@@ -98,16 +122,59 @@ int main(int argc, char const *argv[])
             temp += data.at(i);
         }
         }
-        getline(in, data);
+        ///initializing object values
+        title = holder.at(0);
+        description = holder.at(1);
+        exp_reward = stoi(holder.at(2));
+        p_damage = stoi(holder.at(3));
     }
-
-    for(int i = 0; i < holder.size(); i += 4)
+void Adventure::set_title(string new_title)
+{
+    if(!new_title.empty())
     {
-        cout << holder.at(i) << endl;
-        cout << holder.at(i + 1) << endl;
-        cout << holder.at(i + 2) << endl;
-        cout << holder.at(i + 3) << endl;
+        title = new_title;
     }
-    in.close();
-    return quests;
- }
+}
+
+string Adventure::get_title()
+{
+    return title;
+}
+
+void Adventure::set_description(string new_description)
+{
+    if(!new_description.empty())
+    {
+        description = new_description;
+    }
+}
+
+string Adventure::get_description()
+{
+    return description;
+}
+
+void Adventure::set_exp_reward(int new_exp_reward)
+{
+    if (new_exp_reward >= 0)
+    {
+        exp_reward = new_exp_reward;
+    }
+}
+
+int Adventure::get_exp_reward()
+{
+    return exp_reward;
+}
+
+void Adventure::set_p_damage(int new_p_damage)
+{
+    if(new_p_damage >= 0)
+    {
+        p_damage = new_p_damage;
+    }
+}
+int Adventure::get_p_damage()
+{
+    return p_damage;
+}
