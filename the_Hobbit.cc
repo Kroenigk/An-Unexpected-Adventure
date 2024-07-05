@@ -105,7 +105,7 @@ Hero::Hero()
     level = 1;
     exp = 0;
     health = 100;
-    vector<string> skills = {"Whit and Wisdom"};
+    vector<string> skills = {"Whit", "Wisdom"};
     vector<string> inventory = {"Handkerchief"};
 
 
@@ -221,72 +221,103 @@ Hero::Hero()
     cout << setw(40) << setfill('-') << " ";
     cout << endl;
 
-    race_menu();
-    cout << "What is your race? ";
-    cin >> choice;
-    choice = make_lower(choice);
-    if(choice == "human" || choice == "hobbit" || choice == "dwarf" || choice == "elf")
+    ///Menu Selection and data validation
+    do
     {
-        race = choice;
-    }
+        race_menu();
+        cout << "What is your race? ";
+        cin >> choice;
+        choice = make_lower(choice);
+        if(choice == "human" || choice == "hobbit" || choice == "dwarf" || choice == "elf")
+        {
+            race = choice;
+        }
+    } while (choice != "human" && choice != "hobbit" && choice != "dwarf" && choice != "elf");
+    
+    ///formatting
     cout << setw(40) << setfill('-') << " ";
     cout << endl;
 
     //skills
     string skill1;
     string skill2;
+    ///All Heros has Wisdom
+    skills.push_back("Wisdom");
     cout << "Choose two skills" << endl;
     cout << setw(40) << setfill('-') << " ";
     cout << endl;
-    skill_menu();
-    cout << "Select your skill: ";
-    cin >> skill1;
+    do
+    {
+        skill_menu();
+        ///Menu Selection
+        cout << "Select your skill: ";
+        cin >> skill1;
+
+    } while (validate_stat(skill1) == false);
+    
+    ///adds skill to vector
     skills.push_back(skill1);
-    cout << "Select your other skill: ";
-    cin >> skill2;
+
+    do
+    {
+        ///Menu Selection
+        cout << "Select your other skill: ";
+        cin >> skill2;
+    } while (validate_stat(skill2) == false);
+
+    ///adds skill to vector
     skills.push_back(skill2);
+
+    ///formatting
     cout << setw(40) << setfill('-') << " ";
     cout << endl;
 
     ///items
     string item;
+
+    ///Menu Selection
     cout << "What item do you carry?" << endl;
     cout << setw(40) << setfill('-') << " ";
     cout << endl;
+
     item_menu();
     cout << "Select and item: ";
     cin >> item;
+    ///data validation
     inventory.push_back(item);
+
+    ///formatting
     cout << setw(40) << setfill('-') << " ";
     cout << endl; 
 
 
     }
-    ///Menus
+    ///Menus and Stats
     void Hero::race_menu()
     {
-        cout << "Human" << endl;
-        cout << "Hobbit" << endl;
-        cout << "Dwarf" << endl;
-        cout << "Elf" << endl;
+        cout << "1. Human" << endl;
+        cout << "2. Hobbit" << endl;
+        cout << "3. Dwarf" << endl;
+        cout << "4. Elf" << endl;
     }
     void Hero::skill_menu()
     {
-        cout << "Healing" << endl;
-        cout << "Fighting" << endl;
-        cout << "Tracking" << endl;
-        cout << "Scouting" << endl;
-        cout << "Baking and Cooking" << endl;
-        cout << "Sewing" << endl;
+        cout << "1. Healing" << endl;
+        cout << "2. Fighting" << endl;
+        cout << "3. Tracking" << endl;
+        cout << "4. Scouting" << endl;
+        cout << "5. Baking" << endl;
+        cout << "6. Cooking" << endl;
+        cout << "7. Whit" << endl;
     }
     void Hero::item_menu()
     {
-        cout << "Axe" << endl;
-        cout << "Sword" << endl;
-        cout << "Bow and Arrows" << endl;
-        cout << "Daggers" << endl;
-        cout << "Medical Kit" << endl;
-        cout << "Sewing kit" << endl;
+        cout << "1. Axe" << endl;
+        cout << "2. Sword" << endl;
+        cout << "3. Bow" << endl;
+        cout << "4. Daggers" << endl;
+        cout << "5. Medical Kit" << endl;
+        cout << "6. Cooking Materials" << endl;
     }
     void Hero::hero_stats()
     {
@@ -302,8 +333,10 @@ Hero::Hero()
                 cout << ", ";
             }
         }
-        cout << setfill('-') << setw(20) << endl; 
-        cout << "Inventory: ";
+        ///formatting
+        cout << endl;
+        cout << setfill('-') << setw(20) << " " << endl; 
+        cout  << "Inventory: ";
         for (int i = 0; i < inventory.size(); ++i)
         {
             cout << inventory.at(i);
@@ -314,4 +347,31 @@ Hero::Hero()
         }
         cout << setfill('-') << setw(20) << endl; 
 
+    }
+
+
+    ///Opening Data Files
+    bool Hero::validate_stat(string check_skill)
+    {
+        ifstream in;
+        string skill;
+        in.open("skills.txt");
+        if (in.fail())
+        {
+            cout << "Failed to Open Skills File" << endl;
+            exit(0);
+        }
+        while(!in.eof())
+        {
+            getline(in, skill);
+            skill = make_lower(skill);
+            check_skill = make_lower(check_skill);
+            if(check_skill == skill)
+            {
+                return true;
+            }
+            skill = "";
+        }
+        in.close();
+        return false;
     }

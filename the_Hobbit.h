@@ -51,6 +51,7 @@ class Hero
     void level_Up();
     void learn_skill(string new_skill);
     void hero_stats();
+    bool validate_stat(string check_skill);
 
 
 };
