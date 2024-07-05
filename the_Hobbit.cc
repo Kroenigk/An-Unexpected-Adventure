@@ -105,8 +105,8 @@ Hero::Hero()
     level = 1;
     exp = 0;
     health = 100;
-    vector<string> skills = {"Whit", "Wisdom"};
-    vector<string> inventory = {"Handkerchief"};
+    skills.push_back("Whit");
+    inventory.push_back("Handkercheif"); 
 
 
 
@@ -241,8 +241,7 @@ Hero::Hero()
     //skills
     string skill1;
     string skill2;
-    ///All Heros has Wisdom
-    skills.push_back("Wisdom");
+    
     cout << "Choose two skills" << endl;
     cout << setw(40) << setfill('-') << " ";
     cout << endl;
@@ -308,7 +307,7 @@ Hero::Hero()
         cout << "4. Scouting" << endl;
         cout << "5. Baking" << endl;
         cout << "6. Cooking" << endl;
-        cout << "7. Whit" << endl;
+        cout << "7. Wisdom" << endl;
     }
     void Hero::item_menu()
     {
@@ -324,33 +323,28 @@ Hero::Hero()
         cout << "Race: " << race << endl;
         cout << "Level: " << level << endl;
         cout << "Exp: " << exp << endl;
-        cout << "Skills: ";
+        cout << "Skills: " << endl;
         for (int i = 0; i < skills.size(); ++i)
         {
-            cout << skills.at(i);
-            if(!(i = skills.size() - 1))
-            {
-                cout << ", ";
-            }
+            cout << "\t";
+            cout << skills.at(i) << endl;
         }
         ///formatting
-        cout << endl;
-        cout << setfill('-') << setw(20) << " " << endl; 
-        cout  << "Inventory: ";
+        cout << setfill('-') << setw(40) << " " << endl; 
+        cout  << "Inventory: " << endl;
         for (int i = 0; i < inventory.size(); ++i)
         {
-            cout << inventory.at(i);
-            if(!(i = inventory.size() - 1))
-            {
-                cout << ", ";
-            }
+            
+            cout << "\t";
+            cout << inventory.at(i) << endl;
+           
         }
-        cout << setfill('-') << setw(20) << endl; 
+        cout << setfill('-') << setw(40) << " " << endl; 
 
     }
 
 
-    ///Opening Data Files
+    ///Opening Data Files to validate
     bool Hero::validate_stat(string check_skill)
     {
         ifstream in;
